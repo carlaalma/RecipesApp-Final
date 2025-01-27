@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="?attr/colorPrimary"
+        app:itemBackground="@color/transparent"
+        app:itemIconTint="@color/navigation_item_color"
+        app:itemRippleColor="@color/transparent"
+        app:itemTextColor="@color/navigation_item_color"
+        app:labelVisibilityMode="unlabeled"
+        app:menu="@menu/bottom_nav_menu"
+
+        />
+    <!-- Imagen de la receta -->
+    <ImageView
+        android:id="@+id/img_receta_detalle"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:contentDescription="Imagen de la receta" />
+
+    <!-- Título de la receta -->
+    <TextView
+        android:id="@+id/txt_titulo_detalle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/img_receta_detalle"
+        android:layout_marginTop="16dp"
+        android:text="Título de la receta"
+        android:textSize="28pt"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="0dp" />
+
+    <!-- Ingredientes -->
+    <TextView
+        android:id="@+id/txt_ingredientes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_titulo_detalle"
+        android:layout_marginTop="6dp"
+        android:text="Ingredientes:"
+        android:textStyle="bold"
+        android:layout_marginLeft="10dp"
+        android:textSize="16pt"/>
+
+    <TextView
+        android:id="@+id/txt_lista_ingredientes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_ingredientes"
+        android:layout_marginTop="4dp"
+        android:text="Aquí se mostrarán los ingredientes"
+        android:layout_marginLeft="10dp"/>
+
+    <!-- Pasos -->
+    <TextView
+        android:id="@+id/txt_pasos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_lista_ingredientes"
+        android:layout_marginTop="16dp"
+        android:text="Pasos:"
+        android:textStyle="bold"
+        android:layout_marginLeft="10dp"
+        android:textSize="16pt"/>
+
+    <TextView
+        android:id="@+id/txt_lista_pasos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_pasos"
+        android:layout_marginTop="4dp"
+        android:text="Aquí se mostrarán los pasos"
+        android:layout_marginLeft="10dp"/>
+    <!-- Rating bar -->
+    <LinearLayout
+        android:id="@+id/rating_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottom_navigation"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <RatingBar
+            android:id="@+id/rating_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:stepSize="1.0"
+            android:rating="0" />
+
+    </LinearLayout>
+</RelativeLayout>

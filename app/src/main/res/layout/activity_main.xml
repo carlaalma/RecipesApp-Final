@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="66dp"
+        android:layout_margin="6dp"
+        android:columnCount="3"
+        android:gravity="center"
+        android:rowCount="1">
+
+        <ImageView
+            android:id="@+id/img_receta"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:layout_gravity="center|top"
+            android:scaleType="centerCrop"
+            android:src="@drawable/icono" />
+    </GridLayout>
+    <TextView
+        android:id="@+id/tv_titulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
+        android:gravity="center"
+        android:text="Categorías de recetas"
+        android:textSize="26pt"
+        android:textStyle="bold" />
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        android:columnCount="2"
+        android:gravity="center"
+        android:rowCount="3"
+        >
+
+        <!-- Botones del GridLayout -->
+        <Button
+            android:id="@+id/btn_entrante"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:layout_margin="16dp"
+            android:background="@drawable/rounded_button"
+            android:text="Entrantes \n🥗" />
+
+        <Button
+            android:id="@+id/btn_principal"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:layout_margin="16dp"
+            android:background="@drawable/rounded_button"
+            android:text="Principales \n🥘" />
+
+        <Button
+            android:id="@+id/btn_segundos"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:layout_margin="16dp"
+            android:background="@drawable/rounded_button"
+            android:text="Segundos \n🍗" />
+
+        <Button
+            android:id="@+id/btn_postres"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:layout_margin="16dp"
+            android:background="@drawable/rounded_button"
+            android:text="Postres \n🍨" />
+
+        <Button
+            android:id="@+id/btn_reposteria"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:layout_margin="16dp"
+            android:background="@drawable/rounded_button"
+            android:text="Repostería \n🍪" />
+
+        <Button
+            android:id="@+id/btn_panadería"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:layout_margin="16dp"
+            android:background="@drawable/rounded_button"
+            android:text="Panadería \n🥐" />
+    </GridLayout>
+
+    <Button
+        android:id="@+id/btn_misrecetas"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:background="@drawable/rounded_button"
+        android:text="Mis recetas \n🍽" />
+</LinearLayout>
+
+
+
+
+
+
+
