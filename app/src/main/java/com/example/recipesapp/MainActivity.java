@@ -2,10 +2,8 @@ package com.example.recipesapp;
 
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
@@ -15,13 +13,13 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.recipesapp.activities.EntrantesActivity;
-import com.example.recipesapp.activities.MisRecetasActivity;
+import com.example.recipesapp.activities.NuevaRecetaActivity;
 import com.example.recipesapp.activities.PanaderiaActivity;
 import com.example.recipesapp.activities.PostresActivity;
 import com.example.recipesapp.activities.PrincipalActivity;
 import com.example.recipesapp.activities.ReposteriaActivity;
 import com.example.recipesapp.activities.SegundosActivity;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
             Button btn_postres = findViewById(R.id.btn_postres);
             Button btn_reposteria = findViewById(R.id.btn_reposteria);
             Button btn_panaderia = findViewById(R.id.btn_panadería);
-            Button btn_mis_recetas = findViewById(R.id.btn_misrecetas);
+            FloatingActionButton btnAddReceta = findViewById(R.id.fab_add_receta);
 
             btn_entrante.setOnClickListener(v -> {
                Intent intent = new Intent(MainActivity.this, EntrantesActivity.class);
@@ -69,11 +67,11 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, PanaderiaActivity.class);
                 startActivity(intent);
             });
-            btn_mis_recetas.setOnClickListener(v -> {
-                Intent intent = new Intent(MainActivity.this, MisRecetasActivity.class);
+
+            btnAddReceta.setOnClickListener(v -> {
+                Intent intent = new Intent(MainActivity.this, NuevaRecetaActivity.class);
                 startActivity(intent);
             });
-
         }
     }
 

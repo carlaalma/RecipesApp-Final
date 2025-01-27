@@ -94,12 +94,17 @@
             android:text="Panadería \n🥐" />
     </GridLayout>
 
-    <Button
-        android:id="@+id/btn_misrecetas"
-        android:layout_width="150dp"
-        android:layout_height="100dp"
-        android:background="@drawable/rounded_button"
-        android:text="Mis recetas \n🍽" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add_receta"
+        android:layout_gravity="right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_add"
+        android:contentDescription="Agregar nueva receta"
+        app:backgroundTint="@color/main" />
 </LinearLayout>
 
 

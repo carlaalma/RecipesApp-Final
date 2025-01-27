@@ -4,12 +4,15 @@ package com.example.recipesapp.activities;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.recipesapp.R;
 import com.example.recipesapp.RecetaAdapter;
+import com.example.recipesapp.database.DatabaseManager;
 import com.example.recipesapp.models.Receta;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -17,15 +20,44 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EntrantesActivity extends AppCompatActivity {
+    private ArrayList<Receta> recetas;
+
+    private void cargarRecetas() {
+        DatabaseManager dbManager = new DatabaseManager(this);
+        SQLiteDatabase db = dbManager.getReadableDatabase();
+
+        Cursor cursor = db.query(DatabaseManager.TABLE_RECETAS,
+                null, // Selecciona todas las columnas
+                DatabaseManager.COLUMN_TIPO_RECETA + " = ?", // Condición WHERE
+                new String[]{"Entrante"}, // Filtra por tipo_receta
+                null, null, null);
+
+        recetas = new ArrayList<>(); // Inicializa la lista
+        while (cursor.moveToNext()) {
+            @SuppressLint("Range") Receta receta = new Receta(
+                    cursor.getInt(cursor.getColumnIndex(DatabaseManager.COLUMN_ID)),
+                    cursor.getString(cursor.getColumnIndex(DatabaseManager.COLUMN_TITULO)),
+                    cursor.getString(cursor.getColumnIndex(DatabaseManager.COLUMN_DESCRIPCION)),
+                    cursor.getString(cursor.getColumnIndex(DatabaseManager.COLUMN_IMAGEN)),
+                    cursor.getString(cursor.getColumnIndex(DatabaseManager.COLUMN_INGREDIENTES)),
+                    cursor.getString(cursor.getColumnIndex(DatabaseManager.COLUMN_PASOS)),
+                    cursor.getString(cursor.getColumnIndex(DatabaseManager.COLUMN_TIPO_RECETA))
+            );
+            recetas.add(receta);
+        }
+        cursor.close();
+        db.close();
+    }
 
     @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entrantes);
-
+        cargarRecetas();
 
         List<Receta> recetas = new ArrayList<>();
+
         recetas.add(new Receta(
                 "Bruschetta",
                 "Pan tostado con tomate y albahaca",
@@ -51,8 +83,6 @@ public class EntrantesActivity extends AppCompatActivity {
                 "1. Mezcla todos los ingredientes. \n2. Licua hasta obtener una textura suave. \n3. Refrigera antes de servir.",
                 R.drawable.gazpacho
         ));
-
-
         ListView listView = findViewById(R.id.list_recetas);
         RecetaAdapter adapter = new RecetaAdapter(this, recetas);
         listView.setAdapter(adapter);

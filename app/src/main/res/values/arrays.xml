@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="tipos_recetas">
+        <item>Entrante</item>
+        <item>Principal</item>
+        <item>Segundo</item>
+        <item>Postre</item>
+        <item>Repostería</item>
+        <item>Panadería</item>
+    </string-array>
+</resources>

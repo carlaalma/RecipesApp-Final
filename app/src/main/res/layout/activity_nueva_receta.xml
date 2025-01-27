@@ -48,6 +48,16 @@
             android:layout_height="wrap_content"
             android:hint="Descripción de la receta" />
 
+        <Spinner
+            android:id="@+id/spinner_tipo_receta"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:backgroundTint="@color/transparent"
+            android:contentDescription="Selecciona el tipo de receta"
+            android:entries="@array/tipos_recetas"
+            android:spinnerMode="dropdown" />
+
+
         <EditText
             android:id="@+id/edit_ingredientes"
             android:layout_width="match_parent"

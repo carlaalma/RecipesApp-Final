@@ -13,20 +13,35 @@ import java.util.List;
 
 public class DatabaseManager extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "recetas.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     public static final String TABLE_RECETAS = "recetas";
     public static final String COLUMN_ID = "id";
     public static final String COLUMN_TITULO = "titulo";
     public static final String COLUMN_DESCRIPCION = "descripcion";
-    public static final String COLUMN_CATEGORIA = "categoria";
     public static final String COLUMN_IMAGEN = "imagen";
     public static final String COLUMN_INGREDIENTES = "ingredientes";
     public static final String COLUMN_PASOS = "pasos";
     public static final String COLUMN_IMAGEN_RES_ID = "imagen_res_id"; // Nueva columna
+    public static final String COLUMN_TIPO_RECETA = "tipo_receta"; // Nuevo atributo
 
     public DatabaseManager(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        SQLiteDatabase db = this.getWritableDatabase();
+    }
+
+
+
+    private void insertarReceta(SQLiteDatabase db, String titulo, String descripcion,
+                                String imagen, String ingredientes, String pasos, String tipoReceta) {
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_TITULO, titulo);
+        values.put(COLUMN_DESCRIPCION, descripcion);
+        values.put(COLUMN_IMAGEN, imagen);
+        values.put(COLUMN_INGREDIENTES, ingredientes);
+        values.put(COLUMN_PASOS, pasos);
+        values.put(COLUMN_TIPO_RECETA, tipoReceta);
+        db.insert(TABLE_RECETAS, null, values);
     }
 
     @Override
@@ -35,18 +50,19 @@ public class DatabaseManager extends SQLiteOpenHelper {
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_TITULO + " TEXT, " +
                 COLUMN_DESCRIPCION + " TEXT, " +
-                COLUMN_CATEGORIA + " TEXT, " +
                 COLUMN_IMAGEN + " TEXT, " +
                 COLUMN_INGREDIENTES + " TEXT, " +
                 COLUMN_PASOS + " TEXT, " +
-                COLUMN_IMAGEN_RES_ID + " INTEGER)";
+                COLUMN_IMAGEN_RES_ID + " INTEGER," +
+                COLUMN_TIPO_RECETA + " TEXT)";
         db.execSQL(createTable);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_RECETAS);
-        onCreate(db);
+        if (oldVersion < 2) {
+            db.execSQL("ALTER TABLE " + TABLE_RECETAS + " ADD COLUMN " + COLUMN_TIPO_RECETA + " TEXT");
+        }
     }
 
     // CRUD Methods
@@ -57,11 +73,11 @@ public class DatabaseManager extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(COLUMN_TITULO, receta.getTitulo());
         values.put(COLUMN_DESCRIPCION, receta.getDescripcion());
-        values.put(COLUMN_CATEGORIA, receta.getCategoria());
         values.put(COLUMN_IMAGEN, receta.getImagen());
         values.put(COLUMN_INGREDIENTES, receta.getIngredientes());
         values.put(COLUMN_PASOS, receta.getPasos());
         values.put(COLUMN_IMAGEN_RES_ID, receta.getImagenResId());
+        values.put(COLUMN_TIPO_RECETA, receta.getTipoReceta());
         long id = db.insert(TABLE_RECETAS, null, values);
         db.close();
         return id;
@@ -79,11 +95,8 @@ public class DatabaseManager extends SQLiteOpenHelper {
                 Receta receta = new Receta(
                         cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID)),
                         cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TITULO)),
-                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DESCRIPCION)),
-                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CATEGORIA)),
                         cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_IMAGEN)),
-                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_INGREDIENTES)),
-                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PASOS))
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_INGREDIENTES))
                 );
                 receta.setImagenResId(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_IMAGEN_RES_ID)));
                 recetas.add(receta);
@@ -104,11 +117,8 @@ public class DatabaseManager extends SQLiteOpenHelper {
             Receta receta = new Receta(
                     cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID)),
                     cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TITULO)),
-                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DESCRIPCION)),
-                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CATEGORIA)),
                     cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_IMAGEN)),
-                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_INGREDIENTES)),
-                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PASOS))
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_INGREDIENTES))
             );
             receta.setImagenResId(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_IMAGEN_RES_ID)));
             cursor.close();
@@ -126,7 +136,6 @@ public class DatabaseManager extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(COLUMN_TITULO, receta.getTitulo());
         values.put(COLUMN_DESCRIPCION, receta.getDescripcion());
-        values.put(COLUMN_CATEGORIA, receta.getCategoria());
         values.put(COLUMN_IMAGEN, receta.getImagen());
         values.put(COLUMN_INGREDIENTES, receta.getIngredientes());
         values.put(COLUMN_PASOS, receta.getPasos());
