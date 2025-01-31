@@ -189,6 +189,11 @@ public class DatabaseManager extends SQLiteOpenHelper {
         }
 
     }
+    public Cursor obtenerDatosAceleracion() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM aceleraciones", null);
+    }
+
 
     // Método para agregar una nueva receta (CRUD: Create)
     public long addReceta(Receta receta) {

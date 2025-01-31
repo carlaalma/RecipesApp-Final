@@ -34,8 +34,11 @@ public class MainActivity extends AppCompatActivity {
                 Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
                 v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
                 return insets;
-            });
 
+            });
+            NotificationHelper.createNotificationChannel(this);
+            Intent serviceIntent = new Intent(this, RecetaService.class);
+            startForegroundService(serviceIntent);
             Button btn_entrante = findViewById(R.id.btn_entrante);
             Button btn_principal = findViewById(R.id.btn_principal);
             Button btn_segundos = findViewById(R.id.btn_segundos);

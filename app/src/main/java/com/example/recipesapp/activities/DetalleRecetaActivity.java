@@ -37,7 +37,7 @@ public class DetalleRecetaActivity extends AppCompatActivity {
             txtTitulo.setText(receta.getTitulo() );
             txtIngredientes.setText(receta.getIngredientes());
             txtPasos.setText(receta.getPasos());
-            imgReceta.setImageResource(receta.getImagenResId());
+            imgReceta.setImageResource(receta.getImagen());
             // Imagen por defecto
             }
 

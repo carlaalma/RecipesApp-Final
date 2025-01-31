@@ -66,12 +66,11 @@
         <Spinner
             android:id="@+id/spinner_tipo_receta"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:backgroundTint="@color/transparent"
             android:entries="@array/tipos_recetas"
             android:spinnerMode="dropdown"
-            android:popupBackground="@android:color/white"
-            />
+            android:layout_marginLeft="3dp"/>
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"

@@ -26,9 +26,6 @@ import android.provider.MediaStore;
 import android.widget.Button;
 import android.widget.ImageView;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 
 public class NuevaRecetaActivity extends AppCompatActivity {
@@ -45,9 +42,7 @@ public class NuevaRecetaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_nueva_receta);
 
         spinnerTipoReceta = findViewById(R.id.spinner_tipo_receta);
-        List<String> tiposRecetas = new ArrayList<>();
-        tiposRecetas.add("Seleccione un tipo de receta"); // Placeholder
-        tiposRecetas.addAll(Arrays.asList(getResources().getStringArray(R.array.tipos_recetas)));
+
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 this,
                 R.array.tipos_recetas,
@@ -55,21 +50,18 @@ public class NuevaRecetaActivity extends AppCompatActivity {
         );
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTipoReceta.setAdapter(adapter);
-        spinnerTipoReceta.setSelection(0, false);
+
         // Escucha la selección del usuario
         spinnerTipoReceta.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) {
-                    tipoRecetaSeleccionado = ""; // No se ha seleccionado un tipo válido
-                } else {
-                    tipoRecetaSeleccionado = parent.getItemAtPosition(position).toString();
-                }
+                // Obtén el tipo de receta seleccionado
+                tipoRecetaSeleccionado = parent.getItemAtPosition(position).toString();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                tipoRecetaSeleccionado = ""; // Asegurar que no haya un valor predeterminado
+                String none="Seleccione un tipo de receta"; // Valor por defecto si no selecciona nada
             }
         });
         databaseManager = new DatabaseManager(this);

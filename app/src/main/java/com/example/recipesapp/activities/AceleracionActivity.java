@@ -33,7 +33,7 @@ public class AceleracionActivity extends AppCompatActivity implements SensorEven
     private Sensor acelerometro;
     private TextView txtAceleracionActual, txtAceleracionMedia, txtTiempoMovimiento, txtTimestamp;
     private Button btnReiniciar;
-
+    private Button btnEstadisticas;
     private boolean enMovimiento = false;
     private long tiempoInicio = 0;
     private long tiempoMovimiento = 0;
@@ -55,7 +55,7 @@ public class AceleracionActivity extends AppCompatActivity implements SensorEven
         txtTiempoMovimiento = findViewById(R.id.txt_tiempo_movimiento);
         txtTimestamp = findViewById(R.id.txt_timestamp);
         btnReiniciar = findViewById(R.id.btn_reiniciar);
-
+        btnEstadisticas=findViewById(R.id.btn_estadisticas);
         // Inicializar SensorManager y el acelerómetro
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         if (sensorManager != null) {
@@ -92,6 +92,12 @@ public class AceleracionActivity extends AppCompatActivity implements SensorEven
         // Botón para reiniciar la medición
         btnReiniciar.setOnClickListener(v -> reiniciarMedicion());
         aplicarPreferencias();
+
+        btnEstadisticas.setOnClickListener(v -> {
+            Intent intent = new Intent(AceleracionActivity.this, EstadisticasActivity.class);
+            startActivity(intent);
+        });
+
 
     }
     private void aplicarPreferencias() {
