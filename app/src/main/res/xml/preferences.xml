@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="Personalización de la Aplicación">
+
+        <!-- Tamaño del texto -->
+        <ListPreference
+            android:key="pref_text_size"
+            android:title="Tamaño del texto"
+            android:summary="Selecciona el tamaño del texto en la aplicación"
+            android:entries="@array/text_sizes"
+            android:entryValues="@array/text_sizes_values"
+            android:defaultValue="16sp" />
+
+        <!-- Color del texto -->
+        <ListPreference
+            android:key="pref_text_color"
+            android:title="Color del texto"
+            android:summary="Elige un color para el texto"
+            android:entries="@array/colors"
+            android:entryValues="@array/colors_values"
+            android:defaultValue="#000000" />
+
+        <!-- Fuente del texto -->
+
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
