@@ -12,6 +12,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.recipesapp.activities.AceleracionActivity;
 import com.example.recipesapp.activities.EntrantesActivity;
 import com.example.recipesapp.activities.NuevaRecetaActivity;
 import com.example.recipesapp.activities.PanaderiaActivity;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
             Button btn_reposteria = findViewById(R.id.btn_reposteria);
             Button btn_panaderia = findViewById(R.id.btn_panadería);
             FloatingActionButton btnAddReceta = findViewById(R.id.fab_add_receta);
+            FloatingActionButton fabAceleracion = findViewById(R.id.fab_aceleracion);
 
             btn_entrante.setOnClickListener(v -> {
                Intent intent = new Intent(MainActivity.this, EntrantesActivity.class);
@@ -72,6 +74,11 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, NuevaRecetaActivity.class);
                 startActivity(intent);
             });
+            fabAceleracion.setOnClickListener(view -> {
+                Intent intent = new Intent(MainActivity.this, AceleracionActivity.class);
+                startActivity(intent);
+            });
         }
-    }
+        }
+
 

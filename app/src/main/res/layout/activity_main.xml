@@ -34,77 +34,95 @@
         android:text="Categorías de recetas"
         android:textSize="26pt"
         android:textStyle="bold" />
-
-    <GridLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="6dp"
-        android:columnCount="2"
-        android:gravity="center"
-        android:rowCount="3"
-        >
+        android:layout_height="match_parent">
 
-        <!-- Botones del GridLayout -->
-        <Button
-            android:id="@+id/btn_entrante"
-            android:layout_width="150dp"
-            android:layout_height="100dp"
+        <!-- GridLayout de Categorías -->
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="2"
+            android:layout_margin="18dp"
+            android:gravity="center"
+            android:rowCount="3">
+
+            <!-- Botones de categorías -->
+            <Button
+                android:id="@+id/btn_entrante"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:layout_margin="16dp"
+                android:background="@drawable/rounded_button"
+                android:text="Entrantes \n🥗" />
+
+            <Button
+                android:id="@+id/btn_principal"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:layout_margin="16dp"
+                android:background="@drawable/rounded_button"
+                android:text="Principales \n🥘" />
+
+            <Button
+                android:id="@+id/btn_segundos"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:layout_margin="16dp"
+                android:background="@drawable/rounded_button"
+                android:text="Segundos \n🍗" />
+
+            <Button
+                android:id="@+id/btn_postres"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:layout_margin="16dp"
+                android:background="@drawable/rounded_button"
+                android:text="Postres \n🍨" />
+
+            <Button
+                android:id="@+id/btn_reposteria"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:layout_margin="16dp"
+                android:background="@drawable/rounded_button"
+                android:text="Repostería \n🍪" />
+
+            <Button
+                android:id="@+id/btn_panadería"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:layout_margin="16dp"
+                android:background="@drawable/rounded_button"
+                android:text="Panadería \n🥐" />
+        </GridLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_add_receta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
             android:layout_margin="16dp"
-            android:background="@drawable/rounded_button"
-            android:text="Entrantes \n🥗" />
+            android:src="@drawable/ic_add"
+            android:contentDescription="Agregar nueva receta"
+            app:backgroundTint="@color/main" />
 
-        <Button
-            android:id="@+id/btn_principal"
-            android:layout_width="150dp"
-            android:layout_height="100dp"
-            android:layout_margin="16dp"
-            android:background="@drawable/rounded_button"
-            android:text="Principales \n🥘" />
+        <!-- Botón flotante para la Actividad de Aceleración -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_aceleracion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/fab_add_receta"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/ic_speedometer"
+            android:contentDescription="Medir aceleración"
+            app:backgroundTint="@color/main" />
 
-        <Button
-            android:id="@+id/btn_segundos"
-            android:layout_width="150dp"
-            android:layout_height="100dp"
-            android:layout_margin="16dp"
-            android:background="@drawable/rounded_button"
-            android:text="Segundos \n🍗" />
-
-        <Button
-            android:id="@+id/btn_postres"
-            android:layout_width="150dp"
-            android:layout_height="100dp"
-            android:layout_margin="16dp"
-            android:background="@drawable/rounded_button"
-            android:text="Postres \n🍨" />
-
-        <Button
-            android:id="@+id/btn_reposteria"
-            android:layout_width="150dp"
-            android:layout_height="100dp"
-            android:layout_margin="16dp"
-            android:background="@drawable/rounded_button"
-            android:text="Repostería \n🍪" />
-
-        <Button
-            android:id="@+id/btn_panadería"
-            android:layout_width="150dp"
-            android:layout_height="100dp"
-            android:layout_margin="16dp"
-            android:background="@drawable/rounded_button"
-            android:text="Panadería \n🥐" />
-    </GridLayout>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_add_receta"
-        android:layout_gravity="right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_add"
-        android:contentDescription="Agregar nueva receta"
-        app:backgroundTint="@color/main" />
+    </RelativeLayout>
 </LinearLayout>
 
 

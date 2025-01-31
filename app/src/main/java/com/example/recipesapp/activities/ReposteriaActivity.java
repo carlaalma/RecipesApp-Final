@@ -2,11 +2,15 @@ package com.example.recipesapp.activities;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.recipesapp.R;
 import com.example.recipesapp.RecetaAdapter;
+import com.example.recipesapp.database.DatabaseManager;
 import com.example.recipesapp.models.Receta;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -15,43 +19,63 @@ import java.util.List;
 
 public class ReposteriaActivity extends AppCompatActivity {
 
+    private ArrayList<Receta> recetas;
+
+    private void cargarRecetas() {
+        DatabaseManager dbManager = new DatabaseManager(this);
+        SQLiteDatabase db = dbManager.getReadableDatabase();
+
+        recetas = new ArrayList<>();
+
+        Cursor cursor = db.query(
+                DatabaseManager.TABLE_RECETAS,
+                null,
+                "LOWER(" + DatabaseManager.COLUMN_TIPO_RECETA + ") = ?",
+                new String[]{"repostería"},
+                null, null, null
+        );
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                try {
+                    Receta receta = new Receta(
+                            cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseManager.COLUMN_ID)),
+                            cursor.getString(cursor.getColumnIndexOrThrow(DatabaseManager.COLUMN_TITULO)),
+                            cursor.getString(cursor.getColumnIndexOrThrow(DatabaseManager.COLUMN_DESCRIPCION)),
+                            cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseManager.COLUMN_IMAGEN)),
+                            cursor.getString(cursor.getColumnIndexOrThrow(DatabaseManager.COLUMN_INGREDIENTES)),
+                            cursor.getString(cursor.getColumnIndexOrThrow(DatabaseManager.COLUMN_PASOS)),
+                            cursor.getString(cursor.getColumnIndexOrThrow(DatabaseManager.COLUMN_TIPO_RECETA))
+                    );
+                    Log.d("ReposteriaActivity", "Receta cargada: " + receta.getTitulo());
+                    recetas.add(receta);
+                } catch (Exception e) {
+                    Log.e("ReposteriaActivity", "Error al procesar receta: " + e.getMessage());
+                }
+            } while (cursor.moveToNext());
+            cursor.close();
+        } else {
+            Log.w("ReposteriaActivity", "No se encontraron recetas para 'Postres'.");
+        }
+        db.close();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entrantes);
 
 
-        List<Receta> recetas = new ArrayList<>();
-        recetas.add(new Receta(
-                "Brownies de Chocolate",
-                "Pastelitos densos y ricos en chocolate.",
-                "",
-                "Chocolate, mantequilla, azúcar, huevos, harina",
-                "1. Derrite el chocolate con la mantequilla. \n2. Mezcla con los demás ingredientes. \n3. Hornea hasta que estén hechos.",
-                R.drawable.brownies
-        ));
+        cargarRecetas();
+        // Verificar que la lista no sea null
+        if (recetas == null) {
+            recetas = new ArrayList<>();
+            Log.d("ReposteriaActivity", "La lista de recetas estaba null. Se inicializó.");
+        }
 
-        recetas.add(new Receta(
-                "Magdalenas de Limón",
-                "Esponjosas magdalenas con un toque cítrico.",
-                "",
-                "Harina, azúcar, huevos, mantequilla, limón",
-                "1. Prepara la masa con los ingredientes. \n2. Viértela en moldes. \n3. Hornea hasta que estén doradas.",
-                R.drawable.magdalenas
-        ));
-
-        recetas.add(new Receta(
-                "Galletas con Chispas de Chocolate",
-                "Galletas dulces con trozos de chocolate.",
-                "",
-                "Harina, azúcar, mantequilla, huevos, chispas de chocolate",
-                "1. Mezcla los ingredientes. \n2. Forma las galletas y añade las chispas. \n3. Hornea hasta que estén doradas.",
-                R.drawable.galletas_chocolate
-        ));
 
 
         ListView listView = findViewById(R.id.list_recetas);
-        RecetaAdapter adapter = new RecetaAdapter(this, recetas);
+        RecetaAdapter adapter = new RecetaAdapter(this, (ArrayList<Receta>) recetas);
         listView.setAdapter(adapter);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);

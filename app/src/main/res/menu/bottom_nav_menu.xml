@@ -10,6 +10,10 @@
         android:enabled="true"
         android:title=""
         app:showAsAction="always" />
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/ic_settings"
+        android:title="" />
 
     <item
         android:id="@+id/action_about"

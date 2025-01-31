@@ -4,13 +4,13 @@ public class Receta implements java.io.Serializable {
     private int id;
     private String titulo;
     private String descripcion;
-    private String imagen;
+    private int  imagen;
     private String ingredientes;
     private String pasos;
     private int imagenResId;
     private String tipoReceta;
 
-    public Receta(String titulo, String descripcion, String imagen, String ingredientes, String pasos, int imagenResId) {
+    public Receta(String titulo, String descripcion, int imagen, String ingredientes, String pasos, int imagenResId) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.imagen = imagen;
@@ -19,7 +19,7 @@ public class Receta implements java.io.Serializable {
         this.imagenResId = imagenResId;
     }
 
-    public Receta(int id, String titulo, String imagen, String descripcion, String ingredientes, String pasos, int imagenResId, String tipoReceta) {
+    public Receta(int id, String titulo, int imagen, String descripcion, String ingredientes, String pasos, int imagenResId, String tipoReceta) {
         this.id = id;
         this.titulo = titulo;
         this.imagen = imagen;
@@ -30,13 +30,22 @@ public class Receta implements java.io.Serializable {
         this.tipoReceta = tipoReceta;
     }
 
+    public Receta(String titulo, String descripcion, int imagen, String ingredientes, String pasos, String tipoReceta) {
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.imagen = imagen;
+        this.ingredientes = ingredientes;
+        this.pasos = pasos;
+        this.tipoReceta = tipoReceta;
+    }
+
     public Receta(String titulo, String descripcion, int imagenResId) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.imagenResId = imagenResId;
     }
 
-    public Receta(int id, String titulo, String descripcion, String imagen, String ingredientes, String pasos, String string) {
+    public Receta(int id, String titulo, String descripcion, int imagen, String ingredientes, String pasos, String string) {
         this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
@@ -45,7 +54,7 @@ public class Receta implements java.io.Serializable {
         this.pasos = pasos;
     }
 
-    public Receta(int id, String titulo, String imagen, String ingredientes) {
+    public Receta(int id, String titulo, int imagen, String ingredientes) {
         this.id = id;
         this.titulo = titulo;
         this.imagen = imagen;
@@ -66,7 +75,7 @@ public class Receta implements java.io.Serializable {
     }
 
 
-    public String getImagen() {
+    public int getImagen() {
         return imagen;
     }
 
@@ -89,6 +98,8 @@ public class Receta implements java.io.Serializable {
     public String getTipoReceta() {
         return tipoReceta;
     }
+
+
 }
 
 

@@ -2,11 +2,15 @@ package com.example.recipesapp.activities;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.recipesapp.R;
 import com.example.recipesapp.RecetaAdapter;
+import com.example.recipesapp.database.DatabaseManager;
 import com.example.recipesapp.models.Receta;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -14,44 +18,61 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PrincipalActivity extends AppCompatActivity {
+    private ArrayList<Receta> recetas;
 
+    private void cargarRecetas() {
+        DatabaseManager dbManager = new DatabaseManager(this);
+        SQLiteDatabase db = dbManager.getReadableDatabase();
+
+        recetas = new ArrayList<>();
+
+        Cursor cursor = db.query(
+                DatabaseManager.TABLE_RECETAS,
+                null,
+                "LOWER(" + DatabaseManager.COLUMN_TIPO_RECETA + ") = ?",
+                new String[]{"plato principal"},
+                null, null, null
+        );
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                try {
+                    Receta receta = new Receta(
+                            cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseManager.COLUMN_ID)),
+                            cursor.getString(cursor.getColumnIndexOrThrow(DatabaseManager.COLUMN_TITULO)),
+                            cursor.getString(cursor.getColumnIndexOrThrow(DatabaseManager.COLUMN_DESCRIPCION)),
+                            cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseManager.COLUMN_IMAGEN)),
+                            cursor.getString(cursor.getColumnIndexOrThrow(DatabaseManager.COLUMN_INGREDIENTES)),
+                            cursor.getString(cursor.getColumnIndexOrThrow(DatabaseManager.COLUMN_PASOS)),
+                            cursor.getString(cursor.getColumnIndexOrThrow(DatabaseManager.COLUMN_TIPO_RECETA))
+                    );
+                    Log.d("PrincipalActivity", "Receta cargada: " + receta.getTitulo());
+                    recetas.add(receta);
+                } catch (Exception e) {
+                    Log.e("PrincipalActivity", "Error al procesar receta: " + e.getMessage());
+                }
+            } while (cursor.moveToNext());
+            cursor.close();
+        } else {
+            Log.w("PrincipalActivity", "No se encontraron recetas para 'Postres'.");
+        }
+        db.close();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_entrantes);
+        setContentView(R.layout.activity_principal);
 
-
-        List<Receta> recetas = new ArrayList<>();
-        recetas.add(new Receta(
-                "Paella Valenciana",
-                "Tradicional arroz español con pollo, conejo y verduras.",
-                "", // URI de imagen, si la tuvieras
-                "Arroz, pollo, conejo, judías verdes, tomate, pimiento, aceite de oliva, azafrán",
-                "1. Sofríe el pollo y el conejo. \n2. Añade las verduras y sofríe. \n3. Incorpora el arroz, caldo y azafrán. \n4. Cocina hasta que el arroz esté listo.",
-                R.drawable.paella_valenciana // Recurso local
-        ));
-
-        recetas.add(new Receta(
-                "Lasaña de Carne",
-                "Capas de pasta rellenas de carne, salsa de tomate y queso.",
-                "",
-                "Pasta para lasaña, carne picada, tomate, cebolla, ajo, queso rallado, bechamel",
-                "1. Prepara el relleno de carne. \n2. Alterna capas de pasta, relleno y bechamel. \n3. Hornea hasta dorar.",
-                R.drawable.lasagna
-        ));
-
-        recetas.add(new Receta(
-                "Pollo al Curry",
-                "Pollo cocinado con especias y una cremosa salsa de curry.",
-                "",
-                "Pollo, leche de coco, cebolla, ajo, curry en polvo, especias, arroz",
-                "1. Sofríe el pollo con las especias. \n2. Añade la leche de coco y cocina. \n3. Sirve con arroz.",
-                R.drawable.pollo_curry
-        ));
+        cargarRecetas();
+        // Verificar que la lista no sea null
+        if (recetas == null) {
+            recetas = new ArrayList<>();
+            Log.d("PrincipalActivity", "La lista de recetas estaba null. Se inicializó.");
+        }
 
 
         ListView listView = findViewById(R.id.list_recetas);
-        RecetaAdapter adapter = new RecetaAdapter(this, recetas);
+        RecetaAdapter adapter = new RecetaAdapter(this, (ArrayList<Receta>) recetas);
         listView.setAdapter(adapter);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);

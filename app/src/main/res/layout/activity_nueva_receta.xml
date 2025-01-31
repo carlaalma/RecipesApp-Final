@@ -34,46 +34,83 @@
             android:id="@+id/btn_select_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Seleccionar imagen" />
+            android:text="Seleccionar imagen"
+            android:layout_margin="6dp"/>
 
         <EditText
             android:id="@+id/edit_titulo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Título de la receta" />
+            android:hint="Título de la receta"
+            android:backgroundTint="@color/transparent"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"/>
 
         <EditText
             android:id="@+id/edit_descripcion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Descripción de la receta" />
+            android:hint="Descripción de la receta"
+            android:backgroundTint="@color/transparent"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"/>
 
         <Spinner
             android:id="@+id/spinner_tipo_receta"
             android:layout_width="match_parent"
-            android:layout_height="54dp"
+            android:layout_height="wrap_content"
             android:backgroundTint="@color/transparent"
-            android:contentDescription="Selecciona el tipo de receta"
             android:entries="@array/tipos_recetas"
-            android:spinnerMode="dropdown" />
-
+            android:spinnerMode="dropdown"
+            android:popupBackground="@android:color/white"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"/>
 
         <EditText
             android:id="@+id/edit_ingredientes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Ingredientes" />
+            android:hint="Ingredientes"
+            android:backgroundTint="@color/transparent"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"/>
+
 
         <EditText
             android:id="@+id/edit_pasos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Pasos" />
+            android:hint="Pasos"
+            android:backgroundTint="@color/transparent"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"/>
 
         <Button
             android:id="@+id/btn_guardar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Guardar" />
+            android:text="Guardar"
+            android:layout_margin="6dp"/>
     </LinearLayout>
 </ScrollView>

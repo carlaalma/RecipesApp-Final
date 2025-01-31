@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.recipesapp.MainActivity;
 import com.example.recipesapp.R;
 import com.example.recipesapp.database.DatabaseManager;
 import com.example.recipesapp.models.Receta;
@@ -24,6 +26,9 @@ import android.provider.MediaStore;
 import android.widget.Button;
 import android.widget.ImageView;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 public class NuevaRecetaActivity extends AppCompatActivity {
@@ -34,34 +39,37 @@ public class NuevaRecetaActivity extends AppCompatActivity {
     private DatabaseManager databaseManager;
     private Spinner spinnerTipoReceta;
     private String tipoRecetaSeleccionado;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nueva_receta);
 
         spinnerTipoReceta = findViewById(R.id.spinner_tipo_receta);
-
+        List<String> tiposRecetas = new ArrayList<>();
+        tiposRecetas.add("Seleccione un tipo de receta"); // Placeholder
+        tiposRecetas.addAll(Arrays.asList(getResources().getStringArray(R.array.tipos_recetas)));
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 this,
                 R.array.tipos_recetas,
-                android.R.layout.simple_spinner_item
+                R.layout.spinner_item
         );
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTipoReceta.setAdapter(adapter);
-
+        spinnerTipoReceta.setSelection(0, false);
         // Escucha la selección del usuario
         spinnerTipoReceta.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // Obtén el tipo de receta seleccionado
-                tipoRecetaSeleccionado = parent.getItemAtPosition(position).toString();
-                Toast.makeText(NuevaRecetaActivity.this, "Seleccionado: " + tipoRecetaSeleccionado, Toast.LENGTH_SHORT).show();
+                if (position == 0) {
+                    tipoRecetaSeleccionado = ""; // No se ha seleccionado un tipo válido
+                } else {
+                    tipoRecetaSeleccionado = parent.getItemAtPosition(position).toString();
+                }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                tipoRecetaSeleccionado = "Entrante"; // Valor por defecto si no selecciona nada
+                tipoRecetaSeleccionado = ""; // Asegurar que no haya un valor predeterminado
             }
         });
         databaseManager = new DatabaseManager(this);
@@ -83,15 +91,35 @@ public class NuevaRecetaActivity extends AppCompatActivity {
             String descripcion = editDescripcion.getText().toString();
             String ingredientes = editIngredientes.getText().toString();
             String pasos = editPasos.getText().toString();
+            int imagenNombre;
+            if (imageUri != null) {
+                // Obtener el nombre de la imagen y mapearlo a un recurso de drawable
+                String nombreImagen = imageUri.getLastPathSegment();
+                imagenNombre = getResources().getIdentifier(nombreImagen, "drawable", getPackageName());
+
+                // Si no se encuentra el recurso, usa la imagen por defecto
+                if (imagenNombre == 0) {
+                    imagenNombre = R.drawable.icono; // Icono por defecto si la imagen no es válida
+                }
+            } else {
+                imagenNombre = R.drawable.icono; // Si no se seleccionó imagen, usar icono por defecto
+            }
 
             if (!titulo.isEmpty() && !descripcion.isEmpty()) {
-                databaseManager.addReceta(new Receta(titulo, descripcion, "", ingredientes, pasos, 0));
+                Receta nuevaReceta = new Receta(titulo, descripcion, imagenNombre, ingredientes, pasos, tipoRecetaSeleccionado);
+                databaseManager.addReceta(nuevaReceta);
+
                 Toast.makeText(this, "Receta guardada correctamente", Toast.LENGTH_SHORT).show();
+
+                // Refrescar la lista de recetas
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
                 finish();
             } else {
                 Toast.makeText(this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show();
             }
         });
+
     }
     private void setupBottomNavigation(BottomNavigationView bottomNavigationView) {
         bottomNavigationView.setOnItemSelectedListener(item -> {

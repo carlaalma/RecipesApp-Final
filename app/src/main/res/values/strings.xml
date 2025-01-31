@@ -1,5 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
 <resources>
     <string name="app_name">RecipesApp</string>
+    <string-array name="text_size_options">
+        <item>Pequeño</item>
+        <item>Mediano</item>
+        <item>Grande</item>
+    </string-array>
 
+    <string-array name="text_size_values">
+        <item>small</item>
+        <item>medium</item>
+        <item>large</item>
+    </string-array>
 
 </resources>
